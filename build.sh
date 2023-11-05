@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NGINX_DEB_VERSION=`curl -s https://nginx.org/packages/mainline/debian/pool/nginx/n/nginx/ |grep '"nginx_' | sed -n "s/^.*\">nginx_\(.*\)\~.*$/\1/p" |sort -Vr |head -1`
+NGINX_DEB_VERSION=`curl -s https://nginx.org/packages/mainline/debian/pool/nginx/n/nginx/ |grep '"nginx_' | sed -n "s/^.*\">nginx_\(.*\)\~.*$/\1/p" |sort -Vr |head -1| cut -d'-' -f1`
 NGINX_VERSION=`echo ${NGINX_DEB_VERSION} | cut -d'-' -f1`
 NGINX_DEB_RELEASE=`echo ${NGINX_DEB_VERSION} | cut -d'-' -f2`
 
