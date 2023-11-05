@@ -55,7 +55,7 @@ COPY debian nginx-${NGINX_VERSION}/debian
 
 RUN sed -i "s/bullseye; urgency/${RELEASE}; urgency/g" nginx-${NGINX_VERSION}/debian/changelog
 RUN sed -i "s/~bullseye)/~${RELEASE})/g" nginx-${NGINX_VERSION}/debian/changelog
-RUN sed -i "s/{NGINX_VERSION}/${NGINX_VERSION}-${NGINX_DEB_RELEASE}~${RELEASE}/g" nginx-${NGINX_VERSION}/debian/control
+RUN sed -i "s/{NGINX_VERSION}/${NGINX_VERSION}~${RELEASE}/g" nginx-${NGINX_VERSION}/debian/control
 
 RUN cd nginx-${NGINX_VERSION} && dpkg-buildpackage
 
@@ -65,7 +65,7 @@ RUN dpkg -c /src/libnginx-mod-brotli_*.deb
 RUN curl -L https://nginx.org/keys/nginx_signing.key | apt-key add -
 RUN echo "deb https://nginx.org/packages/mainline/${DISTRIB}/ ${RELEASE} nginx" >> /etc/apt/sources.list.d/nginx.list
 
-RUN apt-get update && apt-get -V --no-install-recommends --no-install-suggests -y install nginx=${NGINX_VERSION}-${NGINX_DEB_RELEASE}~${RELEASE}
+RUN apt-get update && apt-get -V --no-install-recommends --no-install-suggests -y install nginx=${NGINX_VERSION}~${RELEASE}
 
 RUN dpkg -i /src/libnginx-mod-brotli_*.deb && \
     sed -i '1iload_module modules/ngx_http_brotli_filter_module.so;' /etc/nginx/nginx.conf && \
